@@ -52,7 +52,10 @@ public abstract class FirstPersonAnimatorMixin {
 	//? <=1.21.11 {
 	@WrapOperation(method = "renderArmWithItem", at= @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z"))
 	public boolean undoCrossbow(ItemStack instance, Item item, Operation<Boolean> original) {
-	//?} else {
+	//? } else if <= 26.1.2 {
+	 /*@WrapOperation(method = "renderArmWithItem", at= @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Ljava/lang/Object;)Z"))
+	 public boolean undoCrossbow(ItemStack instance, Object item, Operation<Boolean> original) {
+	*///?} else {
 
 	/*@WrapOperation(method = "submitArmWithItem", at= @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Ljava/lang/Object;)Z"))
 	public boolean undoCrossbow(ItemStack instance, Object item, Operation<Boolean> original) {
@@ -64,7 +67,7 @@ public abstract class FirstPersonAnimatorMixin {
 		return original.call(instance,item);
 	}
 
-	//? <=1.21.11 {
+	//? <=26.1.2 {
 	@ModifyArg(method = "renderArmWithItem"
 	//?} else {
 	/*@ModifyArg(method = "submitArmWithItem"
@@ -83,7 +86,7 @@ public abstract class FirstPersonAnimatorMixin {
 	}
 
 	//? if <26.3 {
-	//? <=1.21.11 {
+	//? <=26.1.2 {
 	@WrapMethod(method = "renderArmWithItem")
 	//?} else {
 	/*@WrapMethod(method = "submitArmWithItem")
