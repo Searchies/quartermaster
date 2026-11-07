@@ -27,7 +27,6 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import org.agmas.duck.PlayerAcessor;
 import org.agmas.entity.GreataxeProjectileEntity;
 import org.agmas.init.*;
 import org.agmas.init.tag.ModTags;
@@ -165,7 +164,7 @@ public class GreataxeItem extends EnchantableQMItem {
                 );
                 buster.setOwner(player);
                 buster.setColor(stack.get(ModComponents.BUSTER_COLOR).intValue());
-                buster.attackPower = (float) (player.getAttribute(Attributes.ATTACK_DAMAGE).getValue());
+                buster.attackPower = (float) (player.getAttribute(Attributes.ATTACK_DAMAGE).getValue())* 0.85f;
 
                 if (stack.has(ModComponents.CHARGES)) {
                     stack.set(ModComponents.CHARGES, stack.get(ModComponents.CHARGES).intValue()-1);

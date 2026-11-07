@@ -5,7 +5,16 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -214,6 +223,35 @@ public class Quartermaster implements ModInitializer {
 			}
 		});
 
+	}
+
+	public static void shieldBash(LivingEntity player) {
+		Level level = player.level();
+		if (player.getItemBlockingWith() != null && !level.isClientSide()) {
+			boolean shieldBash = EnchantmentHelper.getItemEnchantmentLevel(ModEnchants.enchantHolder(level, ModEnchants.SHIELD_BASH),player.getItemBlockingWith()) > 0;
+			if (shieldBash) {
+				player.addDeltaMovement(player.getViewVector(0f).multiply(1,0,1));
+				player.level().playSound(null,player.getX(),player.getY(),player.getZ(),ModSounds.STRONG_SHIELD_BREAK, SoundSource.PLAYERS);
+				//? if >=1.21.11 {
+				player.needsSync = true;
+				//? } else {
+				/*hasImpulse = true;
+				 *///? }
+				if (player instanceof ServerPlayer player2) {
+					player2.connection.send(new ClientboundSetEntityMotionPacket(player2));
+					player2.getCooldowns().addCooldown(player.getItemBlockingWith(), 50);
+				}
+
+				for (Entity entity : level.getEntities(player, player.getBoundingBox().expandTowards(player.getDeltaMovement().multiply(3, 3, 3)))) {
+					entity.hurt(player.damageSources().mobAttack(player),6f);
+					if (entity instanceof LivingEntity livingEntity) {
+						livingEntity.addEffect(new MobEffectInstance(ModEffects.STUNNED, Quartermaster.STUNNED_TICKS, 0));
+					}
+				}
+				player.stopUsingItem();
+
+			}
+		}
 	}
 
 

@@ -2,6 +2,7 @@ package org.agmas.item;
 
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,7 +12,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import org.agmas.duck.PlayerAcessor;
 import org.agmas.init.ModAttachments;
 import org.agmas.init.ModEffects;
 import org.agmas.init.ModItems;
@@ -49,29 +49,28 @@ public class EstocItem extends EnchantableQMItem {
     public static void wound(LivingEntity livingEntity) {
         if (!livingEntity.hasEffect(ModEffects.WOUNDED)) {
             livingEntity.addEffect(new MobEffectInstance(ModEffects.WOUNDED, 20*10,0));
-        } else {
+        } else if (livingEntity.getEffect(ModEffects.WOUNDED).getAmplifier() < 2 || livingEntity.getEffect(ModEffects.WOUNDED).getDuration() < 20) {
             livingEntity.addEffect(new MobEffectInstance(ModEffects.WOUNDED, 20*5,livingEntity.getEffect(ModEffects.WOUNDED).getAmplifier()+1));
         }
     }
 
-    @Override
-    //? if >1.21.1
-    public void hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity attacker) {
-    //? if <=1.21.1
-    //public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity attacker) {
-        if (!livingEntity.isBlocking()) {
-            if (attacker instanceof Player player) {
-                if (((PlayerAcessor) attacker).quartermaster$getEstocWoundChanceTicks() > 0) {
-                    ((PlayerAcessor) attacker).quartermaster$setEstocWoundChanceTicks(0);
-                    wound(livingEntity);
+    public static void onHit(LivingEntity livingEntity, DamageSource damageSource, float baseAttackDamage, float attackDamage, boolean blocked) {
+        if (blocked) return;
+        if (baseAttackDamage < 3) return;
+
+        if (damageSource.getDirectEntity() != null) {
+            if (damageSource.getDirectEntity() instanceof LivingEntity attacker) {
+                if (!(attacker.getMainHandItem().getItem() instanceof EstocItem)) return;
+                if (!livingEntity.isBlocking()) {
+                    if (attacker instanceof Player) {
+                        if (attacker.distanceTo(livingEntity) > 2)
+                            wound(livingEntity);
+                    } else {
+                        wound(livingEntity);
+                    }
                 }
-            } else {
-                wound(livingEntity);
             }
         }
-        //? if <=1.21.1
-        //return
-        super.hurtEnemy(itemStack, livingEntity, attacker);
     }
 
     public static Properties createSettings(QMPToolMaterial material) {

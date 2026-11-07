@@ -1,10 +1,10 @@
 package org.agmas.client.datagen;
 
 //? if >=26.1 {
-/*import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
-*///? } else {
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
- //? }
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+//? } else {
+/*import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+ *///? }
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.core.HolderGetter;
@@ -35,10 +35,10 @@ public class ModRecipeProvider extends FabricRecipeProvider {
     //public HolderGetter<Item> items;
 
     //? if >=26.1 {
-    /*public ModRecipeProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-        *///? } else {
-    public ModRecipeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-    //? }
+    public ModRecipeProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+        //? } else {
+    /*public ModRecipeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+    *///? }
         super(output, registriesFuture);
         //? if <1.21.1
         //items= registriesFuture.resultNow().lookupOrThrow(Registries.ITEM);
@@ -165,8 +165,8 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .smelting(Ingredient.of(ModItems.GOLDEN_CUTLASS),
                                 RecipeCategory.TOOLS,
                                 //? if >=26.1 {
-                                /*CookingBookCategory.MISC,
-                                *///?}
+                                CookingBookCategory.MISC,
+                                //?}
                                 Items.GOLD_NUGGET,
                                 0.1F,
                                 200)
@@ -177,8 +177,8 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .smelting(Ingredient.of(ModItems.GOLDEN_ESTOC),
                                 RecipeCategory.TOOLS,
                                 //? if >=26.1 {
-                                /*CookingBookCategory.MISC,
-                                 *///?}
+                                CookingBookCategory.MISC,
+                                 //?}
                                 Items.GOLD_NUGGET,
                                 0.1F,
                                 200)
@@ -189,8 +189,8 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .smelting(Ingredient.of(ModItems.GOLDEN_GREATAXE),
                                 RecipeCategory.TOOLS,
                                 //? if >=26.1 {
-                                /*CookingBookCategory.MISC,
-                                 *///?}
+                                CookingBookCategory.MISC,
+                                 //?}
                                 Items.GOLD_INGOT,
                                 0.1F,
                                 200)
@@ -201,8 +201,8 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .smelting(Ingredient.of(ModItems.GOLDEN_MORNINGSTAR),
                                 RecipeCategory.TOOLS,
                                 //? if >=26.1 {
-                                /*CookingBookCategory.MISC,
-                                 *///?}
+                                CookingBookCategory.MISC,
+                                 //?}
                                 Items.GOLD_INGOT,
                                 0.1F,
                                 200)
@@ -213,8 +213,8 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .smelting(Ingredient.of(ModItems.GOLDEN_WARHAMMER),
                                 RecipeCategory.TOOLS,
                                 //? if >=26.1 {
-                                /*CookingBookCategory.MISC,
-                                 *///?}
+                                CookingBookCategory.MISC,
+                                 //?}
                                 Items.GOLD_INGOT,
                                 0.1F,
                                 200)

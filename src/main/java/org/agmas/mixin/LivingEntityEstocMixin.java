@@ -9,7 +9,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import org.agmas.duck.PlayerAcessor;
 import org.agmas.init.ModAttachments;
 import org.agmas.init.ModGameRule;
 import org.agmas.init.tag.ModTags;
@@ -22,7 +21,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ServerPlayer.class)
-public abstract class LivingEntityEstocMixin extends Entity {
+public abstract class
+LivingEntityEstocMixin extends Entity {
     public LivingEntityEstocMixin(EntityType<?> entityType, Level level) {
         super(entityType, level);
     }
