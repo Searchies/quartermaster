@@ -35,9 +35,6 @@ public abstract class ShieldBashMixin extends Entity {
     @Shadow
     public abstract ItemStack getUseItem();
 
-    @Unique
-    public int shieldBashTicks = 0;
-
 
     //? if >=1.21.11 {
     @Shadow
@@ -57,44 +54,12 @@ public abstract class ShieldBashMixin extends Entity {
         super(entityType, level);
     }
 
-    @Inject(method = "tick", at = @At("HEAD"))
-    public void tickShieldBashTicks(CallbackInfo ci) {
-        if (shieldBashTicks > 0) {
-            shieldBashTicks--;
-        }
-    }
     //? if <26.3 {
     @Inject(method = "swing(Lnet/minecraft/world/InteractionHand;Z)V", at = @At("HEAD"))
     public void alwaysDisarmed(InteractionHand interactionHand, boolean bl, CallbackInfo ci) {
-    //? } else {
-    /*@Inject(method = "swing", at = @At("HEAD"))
-    public void alwaysDisarmed(InteractionHand hand, SwingAnimation animation, boolean sendToSwingingEntity, CallbackInfoReturnable<Boolean> cir) {
-    *///? }
-        if (getItemBlockingWith() != null && !level().isClientSide()) {
-            boolean shieldBash = EnchantmentHelper.getItemEnchantmentLevel(ModEnchants.enchantHolder(level(), ModEnchants.SHIELD_BASH),getItemBlockingWith()) > 0;
-            if (shieldBash && shieldBashTicks <= 0) {
-                addDeltaMovement(getViewVector(0f).multiply(1,0,1));
-
-                //? if >=1.21.11 {
-                needsSync = true;
-                //? } else {
-                /*hasImpulse = true;
-                 *///? }
-                if (((LivingEntity)(Object)this) instanceof ServerPlayer player2) {
-                    player2.connection.send(new ClientboundSetEntityMotionPacket(player2));
-                }
-
-                for (Entity entity : level().getEntities(this, getBoundingBox().expandTowards(getDeltaMovement().multiply(3, 3, 3)))) {
-                    entity.hurt(damageSources().mobAttack((LivingEntity)(Object)this),6f);
-                    if (entity instanceof LivingEntity livingEntity) {
-                        livingEntity.addEffect(new MobEffectInstance(ModEffects.STUNNED, Quartermaster.STUNNED_TICKS, 0));
-                    }
-                }
-
-                shieldBashTicks = 50;
-            }
-        }
+        Quartermaster.shieldBash((LivingEntity) (Object)this);
     }
+    //? }
 
 
 }

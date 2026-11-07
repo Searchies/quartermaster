@@ -9,11 +9,6 @@ import org.agmas.porting.QMIdentifier;
 
 public class ModGameRule {
     //? if >=1.21.11 {
-    public static final GameRule<Boolean> WOUND_WHEN_ESTOC_UNCHARGED_BOOLEAN_GAMERULE = GameRuleBuilder
-            .forBoolean(false)
-            .category(GameRuleCategory.PLAYER)
-            .buildAndRegister(QMIdentifier.of("wound_when_estoc_uncharges").id);
-
     public static final GameRule<Boolean> ALLOW_ITEM_INTERACTIONS_WHEN_DISARMED = GameRuleBuilder
             .forBoolean(true)
             .category(GameRuleCategory.PLAYER)

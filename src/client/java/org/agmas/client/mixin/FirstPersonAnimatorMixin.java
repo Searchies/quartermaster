@@ -50,13 +50,13 @@ public abstract class FirstPersonAnimatorMixin {
 	//? }
 
 	//? <=1.21.11 {
-	@WrapOperation(method = "renderArmWithItem", at= @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z"))
+	/*@WrapOperation(method = "renderArmWithItem", at= @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z"))
 	public boolean undoCrossbow(ItemStack instance, Item item, Operation<Boolean> original) {
-	//?} else {
+	*///?} else {
 
-	/*@WrapOperation(method = "submitArmWithItem", at= @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Ljava/lang/Object;)Z"))
+	@WrapOperation(method = "submitArmWithItem", at= @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Ljava/lang/Object;)Z"))
 	public boolean undoCrossbow(ItemStack instance, Object item, Operation<Boolean> original) {
-	*///? }
+	//? }
 		float inspectTime = minecraft.player.getAttachedOrElse(ModAttachments.INSPECT_ANIMATION_TICKS, 0)-minecraft.getDeltaTracker().getGameTimeDeltaPartialTick(false);
 		if (inspectTime > 0) {
 			return false;
@@ -65,10 +65,10 @@ public abstract class FirstPersonAnimatorMixin {
 	}
 
 	//? <=1.21.11 {
-	@ModifyArg(method = "renderArmWithItem"
-	//?} else {
-	/*@ModifyArg(method = "submitArmWithItem"
-	*///? }
+	/*@ModifyArg(method = "renderArmWithItem"
+	*///?} else {
+	@ModifyArg(method = "submitArmWithItem"
+	//? }
 	,
 		//? if <26.3
 		at= @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ItemInHandRenderer;renderItem(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;I)V"))
@@ -84,10 +84,10 @@ public abstract class FirstPersonAnimatorMixin {
 
 	//? if <26.3 {
 	//? <=1.21.11 {
-	@WrapMethod(method = "renderArmWithItem")
-	//?} else {
-	/*@WrapMethod(method = "submitArmWithItem")
-	*///? }
+	/*@WrapMethod(method = "renderArmWithItem")
+	*///?} else {
+	@WrapMethod(method = "submitArmWithItem")
+	//? }
 	public void renderFlintlockFirstPerson(AbstractClientPlayer abstractClientPlayer, float f, float g, InteractionHand interactionHand, float h, ItemStack itemStack, float i, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int j, Operation<Void> original) {
 		if (minecraft.player.isHolding(ModItems.FLINTLOCK)) {
 			if (minecraft.player.isUsingItem() || (minecraft.player.getMainHandItem().is(ModItems.FLINTLOCK) && interactionHand.equals(InteractionHand.MAIN_HAND))) {

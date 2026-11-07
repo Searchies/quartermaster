@@ -2,10 +2,10 @@ package org.agmas.init;
 
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 //? if <26.1 {
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-//? } else {
-/*import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
-*///? }
+/*import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+*///? } else {
+import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
+//? }
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -225,12 +225,13 @@ public class ModItems {
     }
     public static void init() {
         ServerLivingEntityEvents.AFTER_DAMAGE.register(CutlassItem::onHit);
+        ServerLivingEntityEvents.AFTER_DAMAGE.register(EstocItem::onHit);
 
         //? if >=26.1 {
-        /*CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS)
-        *///? } else {
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS)
-         //? }
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS)
+        //? } else {
+        /*ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS)
+         *///? }
                 .register((creativeTab) -> {
                     creativeTab.accept(ModItems.RELIC_HANDLE);
                     creativeTab.accept(ModItems.RUINED_HANDLE);
@@ -240,15 +241,15 @@ public class ModItems {
                 });
 
         //? if >=26.1 {
-        /*CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT)
-        *///? } else {
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
-         //? }
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT)
+        //? } else {
+        /*ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
+         *///? }
                 .register((creativeTab) -> {
                     creativeTab.accept(ModItems.FLINTLOCK);
                     //? if >=26.1 {
                     
-                    /*ItemStack coralRapier = ModItems.RAPIER.getDefaultInstance();
+                    ItemStack coralRapier = ModItems.RAPIER.getDefaultInstance();
                     coralRapier.set(ModComponents.IS_CORAL, true);
                     creativeTab.insertAfter(Items.NETHERITE_SWORD, ModItems.RAPIER);
                     creativeTab.insertAfter(Items.NETHERITE_SWORD, coralRapier);
@@ -262,8 +263,8 @@ public class ModItems {
                     creativeTab.insertAfter(Items.NETHERITE_SWORD, ModItemLists.estoc.toArray(new Item[0]));
                     creativeTab.insertAfter(Items.NETHERITE_SWORD, ModItemLists.cutlasses.toArray(new Item[0]));
 
-                    *///? } else {
-                    ItemStack coralRapier = ModItems.RAPIER.getDefaultInstance();
+                    //? } else {
+                    /*ItemStack coralRapier = ModItems.RAPIER.getDefaultInstance();
                     coralRapier.set(ModComponents.IS_CORAL, true);
                     creativeTab.addAfter(Items.NETHERITE_SWORD, ModItems.RAPIER);
                     creativeTab.addAfter(Items.NETHERITE_SWORD, coralRapier);
@@ -280,7 +281,7 @@ public class ModItems {
                     // Swords
                     creativeTab.addAfter(Items.NETHERITE_SWORD, ModItemLists.estoc.toArray(new Item[0]));
                     creativeTab.addAfter(Items.NETHERITE_SWORD, ModItemLists.cutlasses.toArray(new Item[0]));
-                    //? }
+                    *///? }
                 });
     }
 }

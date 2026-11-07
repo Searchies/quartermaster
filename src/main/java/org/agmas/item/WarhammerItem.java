@@ -121,7 +121,7 @@ public class WarhammerItem extends EnchantableQMItem {
                 .enchantable(material.enchantability())
                 .component(ModComponents.WARHAMMER_RANGE, range)
                 //? if >1.21.1
-                .component(DataComponents.WEAPON, new Weapon(1))
+                .component(DataComponents.WEAPON, new Weapon(1, 2f))
                 .durability(material.durability());
     }
 

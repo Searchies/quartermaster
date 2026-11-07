@@ -1,10 +1,6 @@
 package org.agmas.client.datagen;
 
-//? if >=26.1 {
-/*import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
-*///? } else {
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
- //? }
+w
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.core.HolderLookup;
 import org.agmas.client.QuartermasterClient;
@@ -17,10 +13,10 @@ public class ModLanguageProvider extends FabricLanguageProvider {
 
 
     //? if >=26.1 {
-    /*public ModLanguageProvider(FabricPackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
-    *///? } else {
-    public ModLanguageProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
-     //? }
+    public ModLanguageProvider(FabricPackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+    //? } else {
+    /*public ModLanguageProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+     *///? }
         super(dataOutput, registryLookup);
     }   
 
@@ -29,7 +25,7 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         // enchants, oh god
 
         translationBuilder.add("enchantment.quartermaster.buster", "Buster");
-        translationBuilder.add("enchantment.quartermaster.buster.desc", "Attacks no longer go through shields, but ups the damage of the Ranged ability.");
+        translationBuilder.add("enchantment.quartermaster.buster.desc", "Attacks no longer disables shields, but ups the damage of the Ranged ability.");
 
         translationBuilder.add("enchantment.quartermaster.charged", "Charged");
         translationBuilder.add("enchantment.quartermaster.charged.desc", "Lowers damage of the Ranged ability, but adds extra charges depending on level.");

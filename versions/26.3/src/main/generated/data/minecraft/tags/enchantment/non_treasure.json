@@ -97,6 +97,14 @@
       "required": false
     },
     {
+      "id": "quartermaster:north_wind",
+      "required": false
+    },
+    {
+      "id": "quartermaster:excavate",
+      "required": false
+    },
+    {
       "id": "quartermaster:siesmic",
       "required": false
     }

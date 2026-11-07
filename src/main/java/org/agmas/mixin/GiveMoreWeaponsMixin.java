@@ -14,7 +14,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import org.agmas.duck.PlayerAcessor;
 import org.agmas.init.ModAttachments;
 import org.agmas.init.ModGameRule;
 import org.agmas.init.tag.ModItemLists;

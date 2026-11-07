@@ -5,15 +5,15 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 //? if <26.1 {
-import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
-//? } else {
-/*import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
- *///? }
-//? if >=26.1 {
-/*import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
+/*import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 *///? } else {
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-//? }
+import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
+ //? }
+//? if >=26.1 {
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
+//? } else {
+/*import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+*///? }
 import net.fabricmc.fabric.api.client.rendering.v1.RenderStateDataKey;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
@@ -22,11 +22,13 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperties;
+//? if <26.3
 import net.minecraft.network.protocol.game.ServerboundSwingPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Items;
 //? if >=26.3
 //import net.minecraft.world.item.component.SwingAnimation;
+import org.agmas.network.ServerboundUseShieldBashPacket;
 import org.agmas.porting.QMIdentifier;
 import org.agmas.Quartermaster;
 import org.agmas.client.item.CoralRapierBooleanProperty;
@@ -71,14 +73,14 @@ public class QuartermasterClient implements ClientModInitializer {
 		handsRoot =QuartermasterClient.firstPersonHands.bakeRoot();
 
 		//? if <26.1 {
-		ParticleFactoryRegistry.getInstance().register(ModParticles.COLOR_CRIT, ColorCritParticle.InstantProvider::new);
+		/*ParticleFactoryRegistry.getInstance().register(ModParticles.COLOR_CRIT, ColorCritParticle.InstantProvider::new);
 		ParticleFactoryRegistry.getInstance().register(ModParticles.COLOR_SWEEP, ColorAttackSweepParticle.InstantProvider::new);
 		ParticleFactoryRegistry.getInstance().register(ModParticles.LANDING, WarhammerLandingParticle.InstantProvider::new);
-		//? } else {
-		/*ParticleProviderRegistry.getInstance().register(ModParticles.COLOR_CRIT, ColorCritParticle.InstantProvider::new);
+		*///? } else {
+		ParticleProviderRegistry.getInstance().register(ModParticles.COLOR_CRIT, ColorCritParticle.InstantProvider::new);
 		ParticleProviderRegistry.getInstance().register(ModParticles.COLOR_SWEEP, ColorAttackSweepParticle.InstantProvider::new);
 		ParticleProviderRegistry.getInstance().register(ModParticles.LANDING, WarhammerLandingParticle.InstantProvider::new);
-		*///? }
+		//? }
 
 
 		//? if >=1.21.9 {
@@ -134,7 +136,11 @@ public class QuartermasterClient implements ClientModInitializer {
 									//SwingAnimation.DEFAULT,
 									false
 							);
+							//? if <26.3 {
 							m.getConnection().send(new ServerboundSwingPacket(InteractionHand.MAIN_HAND));
+							//? } else {
+							/*ClientPlayNetworking.send(new ServerboundUseShieldBashPacket(true));
+							*///? }
 
 						}
 					}
@@ -153,9 +159,9 @@ public class QuartermasterClient implements ClientModInitializer {
 
 	public static KeyMapping registerKeyMapping(KeyMapping keyMapping) {
 		//? if >=26.1 {
-		/*return KeyMappingHelper.registerKeyMapping(keyMapping);
-		*///? } else {
-		return KeyBindingHelper.registerKeyBinding(keyMapping);
-		 //? }
+		return KeyMappingHelper.registerKeyMapping(keyMapping);
+		//? } else {
+		/*return KeyBindingHelper.registerKeyBinding(keyMapping);
+		 *///? }
 	}
 }

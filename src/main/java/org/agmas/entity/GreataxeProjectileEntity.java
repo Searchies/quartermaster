@@ -13,6 +13,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -141,9 +142,16 @@ public class GreataxeProjectileEntity extends Projectile {
 
             impact();
             boolean isHit = true;
-            if (!canPierceShields) {
-                if (entityHitResult.getEntity() instanceof LivingEntity livingEntity) {
-                    if (livingEntity.isBlocking()) isHit = false;
+            if (entityHitResult.getEntity() instanceof LivingEntity livingEntity) {
+                if (livingEntity.isBlocking()) {
+                    isHit = false;
+                    if (canPierceShields) {
+                        if (livingEntity instanceof Player player) {
+                            player.getCooldowns().addCooldown(player.getItemBlockingWith(), 20 * 5);
+                            player.stopUsingItem();
+                            player.level().playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.STRONG_SHIELD_BREAK, SoundSource.PLAYERS);
+                        }
+                    }
                 }
             }
             if (isHit) {
